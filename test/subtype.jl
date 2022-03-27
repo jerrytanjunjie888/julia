@@ -1976,3 +1976,7 @@ end
 @testintersect(Tuple{Type{Pair{_A, S} where S<:AbstractArray{<:_A, 2}}, Dict} where _A,
                Tuple{Type{Pair{_A, S} where S<:AbstractArray{<:_A, 2}} where _A, Union{Array, Pair}},
                Bottom)
+
+# https://github.com/JuliaLang/julia/issues/44735
+@test_throws ErrorException("invalid subtyping with Vararg") typeintersect(Vararg{Int}, Int)
+@test_throws ErrorException("invalid subtyping with Vararg") typeintersect(Int, Vararg{Int})

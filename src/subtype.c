@@ -1258,7 +1258,8 @@ static int subtype(jl_value_t *x, jl_value_t *y, jl_stenv_t *e, int param)
     }
     if (jl_is_unionall(y))
         return subtype_unionall(x, (jl_unionall_t*)y, e, 1, param);
-    assert(!jl_is_vararg(x) && !jl_is_vararg(y));
+    else if (jl_is_vararg(x) || jl_is_vararg(y))
+        jl_errorf("invalid subtyping with Vararg");
     if (jl_is_datatype(x) && jl_is_datatype(y)) {
         if (x == y) return 1;
         if (y == (jl_value_t*)jl_any_type) return 1;
